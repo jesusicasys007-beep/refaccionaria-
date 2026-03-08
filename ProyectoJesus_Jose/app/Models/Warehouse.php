@@ -6,20 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Brand extends Model
+class Warehouse extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'slug',
+        'code',
+        'address',
+        'city',
+        'state',
         'country',
-        'description',
-        'website',
+        'phone',
     ];
 
-    public function carModels()
+    public function stocks()
     {
-        return $this->hasMany(CarModel::class, 'brand_id');
+        return $this->hasMany(Stock::class, 'warehouse_id');
     }
 }

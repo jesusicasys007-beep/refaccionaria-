@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Brand extends Model
+class Component extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'slug',
-        'country',
+        'part_number',
         'description',
-        'website',
     ];
 
-    public function carModels()
+    public function parts()
     {
-        return $this->hasMany(CarModel::class, 'brand_id');
+        return $this->belongsToMany(Part::class, 'component_part', 'component_id', 'part_id')
+            ->withPivot(['role','quantity'])
+            ->withTimestamps();
     }
 }

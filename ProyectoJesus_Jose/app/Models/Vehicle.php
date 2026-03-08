@@ -6,20 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Brand extends Model
+class Vehicle extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'slug',
-        'country',
+        'car_variant_id',
+        'vin',
+        'stock_code',
+        'year',
+        'color',
+        'mileage',
+        'price',
+        'condition',
         'description',
-        'website',
     ];
 
-    public function carModels()
+    public function variant()
     {
-        return $this->hasMany(CarModel::class, 'brand_id');
+        return $this->belongsTo(CarVariant::class, 'car_variant_id');
     }
 }
