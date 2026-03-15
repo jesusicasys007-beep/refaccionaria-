@@ -1,6 +1,6 @@
-@extends('administrador.layout')
+@extends('administrador.plantilla')
 
 @section("content")
-
+holaaaaa
 
 @endsection
