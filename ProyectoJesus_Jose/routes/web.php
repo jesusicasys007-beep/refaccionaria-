@@ -13,4 +13,3 @@ Route::get('/prueba', function () {
 Route::get('/pruebac', function () {
     return view('cliente.prueba');
 });
-

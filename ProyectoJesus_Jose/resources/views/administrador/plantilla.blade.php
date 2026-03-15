@@ -38,11 +38,11 @@
 			<h4 class="mb-3">Administrador</h4>
 			<hr class="border-white-25">
 			<nav class="nav flex-column">
-				<a class="nav-link" href="{{ route('admin.dashboard') ?? '#' }}">Dashboard</a>
-				<a class="nav-link" href="{{ route('admin.parts.index') ?? '#' }}">Piezas</a>
-				<a class="nav-link" href="{{ route('admin.components.index') ?? '#' }}">Componentes</a>
-				<a class="nav-link" href="{{ route('admin.orders.index') ?? '#' }}">Órdenes</a>
-				<a class="nav-link" href="{{ route('admin.users.index') ?? '#' }}">Usuarios</a>
+				<a class="nav-link" href="">Dashboard</a>
+				<a class="nav-link" href="">Piezas</a>
+				<a class="nav-link" href="">Componentes</a>
+				<a class="nav-link" href="">Órdenes</a>
+				<a class="nav-link" href="">Usuarios</a>
 			</nav>
 		</div>
 	</aside>
