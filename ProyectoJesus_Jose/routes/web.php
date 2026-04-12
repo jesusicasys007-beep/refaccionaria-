@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PracticasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,5 @@ Route::get('/prueba', function () {
 Route::get('/pruebac', function () {
     return view('cliente.prueba');
 });
+
+Route::get('/practicas', [PracticasController::Class,]);
