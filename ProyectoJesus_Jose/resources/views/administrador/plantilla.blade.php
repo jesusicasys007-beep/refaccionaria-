@@ -1,102 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@yield('title', 'Panel de administrador')</title>
-
-	<!-- Bootstrap 5 CDN -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-	<style>
-		body { min-height:100vh; }
-		.admin-layout { display: flex; }
-		.sidebar {
-			width: 250px;
-			background: #0d6efd;
-			color: #fff;
-			min-height: 100vh;
-			transition: transform .2s ease-in-out;
-		}
-		.sidebar a { color: #fff; text-decoration: none; }
-		.sidebar .nav-link { color: rgba(255,255,255,.9); }
-		.sidebar.collapsed { transform: translateX(-250px); }
-		.content { flex: 1; padding: 1.25rem; }
-		@media (max-width: 768px) {
-			.sidebar { position: fixed; z-index: 1030; }
-			.content { padding-top: 4.5rem; }
-		}
-	</style>
-
-	@stack('styles')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Panel Administrador')</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <aside class="w-72 bg-slate-900 text-slate-100 flex flex-col shadow-lg">
+            <div class="px-6 py-5 border-b border-slate-800">
+                <h1 class="text-xl font-semibold">Admin Panel</h1>
+                <p class="text-sm text-slate-400">Gestión de catálogo</p>
+            </div>
 
-<div class="admin-layout">
-	<aside id="adminSidebar" class="sidebar">
-		<div class="p-3">
-			<h4 class="mb-3">Administrador</h4>
-			<hr class="border-white-25">
-			<nav class="nav flex-column">
-				<a class="nav-link" href="">Dashboard</a>
-				<a class="nav-link" href="">Piezas</a>
-				<a class="nav-link" href="">Componentes</a>
-				<a class="nav-link" href="">Órdenes</a>
-				<a class="nav-link" href="">Usuarios</a>
-			</nav>
-		</div>
-	</aside>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="{{ route('admin.dashboard') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Dashboard</a>
+                <a href="{{ route('attributes.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Atributos</a>
+                <a href="{{ route('attribute-values.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Valores de Atributos</a>
+                <a href="{{ route('brands.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Marcas</a>
+                <a href="{{ route('car-models.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Modelos de Carro</a>
+                <a href="{{ route('car-variants.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Variantes de Carro</a>
+                <a href="{{ route('categories.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Categorías</a>
+                <a href="{{ route('components.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Componentes</a>
+                <a href="{{ route('component-parts.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Partes de Componentes</a>
+                <a href="{{ route('images.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Imágenes</a>
+                <a href="{{ route('manufacturers.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Fabricantes</a>
+                <a href="{{ route('orders.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Órdenes</a>
+                <a href="{{ route('order-items.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Ítems de Órdenes</a>
+                <a href="{{ route('parts.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Piezas</a>
+                <a href="{{ route('part-variants.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Variantes de Piezas</a>
+                <a href="{{ route('price-histories.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Historial de Precios</a>
+                <a href="{{ route('stocks.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Inventario</a>
+                <a href="{{ route('users.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Usuarios</a>
+                <a href="{{ route('vehicles.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Vehículos</a>
+                <a href="{{ route('vendors.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Proveedores</a>
+                <a href="{{ route('warehouses.index') }}" class="block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-700">Almacenes</a>
+            </nav>
 
-	<div class="content w-100">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-			<div class="container-fluid">
-				<button class="btn btn-primary me-2" id="sidebarToggle">☰</button>
-				<a class="navbar-brand" href="#">Panel Admin</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="topNav">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Cerrar sesión</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+            <div class="px-6 py-4 border-t border-slate-800 text-slate-400 text-sm">
+                Acceso libre sin sesión.
+            </div>
+        </aside>
 
-		<main class="mt-4">
-			@if(session('status'))
-				<div class="alert alert-success">{{ session('status') }}</div>
-			@endif
+        <main class="flex-1 p-6">
+            <header class="mb-6 flex items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-semibold">@yield('title', 'Panel Administrador')</h2>
+                    <p class="text-sm text-slate-500">Gestione los datos del sistema sin autenticación</p>
+                </div>
+            </header>
 
-			@yield('content')
-		</main>
-	</div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-	(function(){
-		const sidebar = document.getElementById('adminSidebar');
-		const toggle = document.getElementById('sidebarToggle');
-		toggle.addEventListener('click', function(e){
-			e.preventDefault();
-			sidebar.classList.toggle('collapsed');
-		});
-		// Close sidebar on small screens when clicking outside
-		document.addEventListener('click', function(e){
-			if(window.innerWidth <= 768){
-				if(!sidebar.contains(e.target) && !toggle.contains(e.target)){
-					sidebar.classList.add('collapsed');
-				}
-			}
-		});
-	})();
-</script>
-
-@stack('scripts')
-
+            <section class="space-y-6">
+                @yield('content')
+            </section>
+        </main>
+    </div>
 </body>
 </html>
 
