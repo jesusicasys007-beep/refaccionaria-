@@ -22,6 +22,20 @@ class PartController extends Controller
         return view('administrador.parts.index', compact('parts'));
     }
 
+    public function catalog(Request $request)
+    {
+        $query = Part::query()->with(['category', 'manufacturer', 'images']);
+
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        $parts = $query->paginate(9);
+
+        return view('cliente.piezas', compact('parts'));
+    }
+
     public function create()
     {
         $categories = Categorie::all();

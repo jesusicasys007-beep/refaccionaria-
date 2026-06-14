@@ -21,14 +21,19 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WarehouseController;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $featuredVehicles = Vehicle::with(['variant.model.brand', 'images'])
+        ->take(3)
+        ->get();
+
+    return view('welcome', compact('featuredVehicles'));
 })->name('home');
 
-Route::view('/vehiculos', 'cliente.vehiculos')->name('vehiculos');
-Route::view('/piezas', 'cliente.piezas')->name('piezas');
+Route::get('/vehiculos', [VehicleController::class, 'catalog'])->name('vehiculos');
+Route::get('/piezas', [PartController::class, 'catalog'])->name('piezas');
 Route::view('/nosotros', 'cliente.nosotros')->name('nosotros');
 Route::view('/contacto', 'cliente.contacto')->name('contacto');
 Route::view('/publicar', 'cliente.publicar')->name('publicar');

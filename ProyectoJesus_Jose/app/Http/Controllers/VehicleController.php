@@ -21,6 +21,19 @@ class VehicleController extends Controller
         return view('administrador.vehicles.index', compact('vehicles'));
     }
 
+    public function catalog(Request $request)
+    {
+        $query = Vehicle::query()->with(['variant.model.brand', 'images']);
+
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $vehicles = $query->paginate(9);
+
+        return view('cliente.vehiculos', compact('vehicles'));
+    }
+
     public function create()
     {
         $carvariants = CarVariant::all();

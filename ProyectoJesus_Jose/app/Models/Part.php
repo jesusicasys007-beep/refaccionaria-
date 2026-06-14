@@ -41,6 +41,11 @@ class Part extends Model
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
     }
 
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
     public function components()
     {
         return $this->belongsToMany(Component::class, 'component_part', 'part_id', 'component_id')
