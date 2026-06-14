@@ -12,10 +12,6 @@ class AttributeValueController extends Controller
     {
         $query = AttributeValue::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $attributevalues = $query->paginate(15);
 
         return view('administrador.attributevalues.index', compact('attributevalues'));
@@ -25,13 +21,14 @@ class AttributeValueController extends Controller
     {
         $attributes = Attribute::all();
 
-        return view('administrador.attributevalues.create', compact('attribute_id'));
+        return view('administrador.attributevalues.create', compact('attributes'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'attribute_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         AttributeValue::create($validated);
@@ -48,13 +45,14 @@ class AttributeValueController extends Controller
     {
         $attributes = Attribute::all();
 
-        return view('administrador.attributevalues.edit', compact('attributevalue', 'attribute_id'));
+        return view('administrador.attributevalues.edit', compact('attributevalue', 'attributes'));
     }
 
     public function update(Request $request, AttributeValue $attributevalue)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'attribute_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $attributevalue->update($validated);

@@ -28,7 +28,8 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         Attribute::create($validated);
@@ -49,7 +50,8 @@ class AttributeController extends Controller
     public function update(Request $request, Attribute $attribute)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         $attribute->update($validated);

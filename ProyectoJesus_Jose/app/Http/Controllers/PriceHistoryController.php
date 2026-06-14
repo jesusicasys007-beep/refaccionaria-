@@ -12,10 +12,6 @@ class PriceHistoryController extends Controller
     {
         $query = PriceHistory::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $pricehistorys = $query->paginate(15);
 
         return view('administrador.pricehistorys.index', compact('pricehistorys'));
@@ -25,13 +21,14 @@ class PriceHistoryController extends Controller
     {
         $users = User::all();
 
-        return view('administrador.pricehistorys.create', compact('user_id'));
+        return view('administrador.pricehistorys.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'user_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         PriceHistory::create($validated);
@@ -48,13 +45,14 @@ class PriceHistoryController extends Controller
     {
         $users = User::all();
 
-        return view('administrador.pricehistorys.edit', compact('pricehistory', 'user_id'));
+        return view('administrador.pricehistorys.edit', compact('pricehistory', 'users'));
     }
 
     public function update(Request $request, PriceHistory $pricehistory)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'user_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $pricehistory->update($validated);

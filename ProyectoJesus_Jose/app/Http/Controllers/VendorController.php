@@ -28,7 +28,8 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         Vendor::create($validated);
@@ -49,7 +50,8 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         $vendor->update($validated);

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
-use App\Models\Categorie;
 
 class CategorieController extends Controller
 {
@@ -25,13 +24,15 @@ class CategorieController extends Controller
     {
         $categories = Categorie::all();
 
-        return view('administrador.categories.create', compact('parent_id'));
+        return view('administrador.categories.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            'parent_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         Categorie::create($validated);
@@ -48,13 +49,15 @@ class CategorieController extends Controller
     {
         $categories = Categorie::all();
 
-        return view('administrador.categories.edit', compact('categorie', 'parent_id'));
+        return view('administrador.categories.edit', compact('categorie', 'categories'));
     }
 
     public function update(Request $request, Categorie $categorie)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            'parent_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $categorie->update($validated);

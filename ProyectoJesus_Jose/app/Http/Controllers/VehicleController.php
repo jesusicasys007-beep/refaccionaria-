@@ -13,7 +13,7 @@ class VehicleController extends Controller
         $query = Vehicle::query();
 
         if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('vin', 'like', '%' . $request->search . '%');
         }
 
         $vehicles = $query->paginate(15);
@@ -25,13 +25,15 @@ class VehicleController extends Controller
     {
         $carvariants = CarVariant::all();
 
-        return view('administrador.vehicles.create', compact('car_variant_id'));
+        return view('administrador.vehicles.create', compact('carvariants'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'vin' => 'required',
+            'car_variant_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         Vehicle::create($validated);
@@ -48,13 +50,15 @@ class VehicleController extends Controller
     {
         $carvariants = CarVariant::all();
 
-        return view('administrador.vehicles.edit', compact('vehicle', 'car_variant_id'));
+        return view('administrador.vehicles.edit', compact('vehicle', 'carvariants'));
     }
 
     public function update(Request $request, Vehicle $vehicle)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'vin' => 'required',
+            'car_variant_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $vehicle->update($validated);

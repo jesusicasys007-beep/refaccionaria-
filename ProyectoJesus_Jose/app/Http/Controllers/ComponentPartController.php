@@ -13,10 +13,6 @@ class ComponentPartController extends Controller
     {
         $query = ComponentPart::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $componentparts = $query->paginate(15);
 
         return view('administrador.componentparts.index', compact('componentparts'));
@@ -27,13 +23,15 @@ class ComponentPartController extends Controller
         $parts = Part::all();
         $components = Component::all();
 
-        return view('administrador.componentparts.create', compact('part_id', 'component_id'));
+        return view('administrador.componentparts.create', compact('parts', 'components'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'part_id' => 'required',
+            'component_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         ComponentPart::create($validated);
@@ -51,13 +49,15 @@ class ComponentPartController extends Controller
         $parts = Part::all();
         $components = Component::all();
 
-        return view('administrador.componentparts.edit', compact('componentpart', 'part_id', 'component_id'));
+        return view('administrador.componentparts.edit', compact('componentpart', 'parts', 'components'));
     }
 
     public function update(Request $request, ComponentPart $componentpart)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'part_id' => 'required',
+            'component_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $componentpart->update($validated);

@@ -28,7 +28,8 @@ class ManufacturerController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         Manufacturer::create($validated);
@@ -49,7 +50,8 @@ class ManufacturerController extends Controller
     public function update(Request $request, Manufacturer $manufacturer)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         $manufacturer->update($validated);

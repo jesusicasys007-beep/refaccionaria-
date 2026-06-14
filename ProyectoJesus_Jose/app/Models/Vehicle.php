@@ -26,4 +26,9 @@ class Vehicle extends Model
     {
         return $this->belongsTo(CarVariant::class, 'car_variant_id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

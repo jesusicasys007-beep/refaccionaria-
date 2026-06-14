@@ -13,10 +13,6 @@ class PartVariantController extends Controller
     {
         $query = PartVariant::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $partvariants = $query->paginate(15);
 
         return view('administrador.partvariants.index', compact('partvariants'));
@@ -27,13 +23,15 @@ class PartVariantController extends Controller
         $parts = Part::all();
         $carvariants = CarVariant::all();
 
-        return view('administrador.partvariants.create', compact('part_id', 'car_variant_id'));
+        return view('administrador.partvariants.create', compact('parts', 'carvariants'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'part_id' => 'required',
+            'car_variant_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         PartVariant::create($validated);
@@ -51,13 +49,15 @@ class PartVariantController extends Controller
         $parts = Part::all();
         $carvariants = CarVariant::all();
 
-        return view('administrador.partvariants.edit', compact('partvariant', 'part_id', 'car_variant_id'));
+        return view('administrador.partvariants.edit', compact('partvariant', 'parts', 'carvariants'));
     }
 
     public function update(Request $request, PartVariant $partvariant)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'part_id' => 'required',
+            'car_variant_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $partvariant->update($validated);

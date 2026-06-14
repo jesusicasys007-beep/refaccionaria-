@@ -11,10 +11,6 @@ class ImageController extends Controller
     {
         $query = Image::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $images = $query->paginate(15);
 
         return view('administrador.images.index', compact('images'));
@@ -27,13 +23,27 @@ class ImageController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            // Add validation rules here
+        $request->validate([
+            'image' => 'required|image|max:4096',
+            'imageable_id' => 'required|integer',
+            'imageable_type' => 'required|string',
+            'alt' => 'nullable|string',
+            'order' => 'nullable|integer',
         ]);
 
-        Image::create($validated);
+        $path = $request->file('image')->store('images', 'public');
 
-        return redirect()->route('admin.images.index')->with('success', 'Image creado exitosamente');
+        Image::create([
+            'path' => $path,
+            'disk' => 'public',
+            'mime_type' => $request->file('image')->getMimeType(),
+            'imageable_id' => $request->imageable_id,
+            'imageable_type' => $request->imageable_type,
+            'alt' => $request->alt,
+            'order' => $request->order ?? 0,
+        ]);
+
+        return redirect()->route('admin.images.index')->with('success', 'Imagen subida y creada exitosamente');
     }
 
     public function show(Image $image)
@@ -48,19 +58,43 @@ class ImageController extends Controller
 
     public function update(Request $request, Image $image)
     {
-        $validated = $request->validate([
-            // Add validation rules here
+        $request->validate([
+            'image' => 'nullable|image|max:4096',
+            'imageable_id' => 'required|integer',
+            'imageable_type' => 'required|string',
+            'alt' => 'nullable|string',
+            'order' => 'nullable|integer',
         ]);
 
-        $image->update($validated);
+        $data = [
+            'imageable_id' => $request->imageable_id,
+            'imageable_type' => $request->imageable_type,
+            'alt' => $request->alt,
+            'order' => $request->order ?? 0,
+        ];
 
-        return redirect()->route('admin.images.index')->with('success', 'Image actualizado exitosamente');
+        if ($request->hasFile('image')) {
+            if ($image->path) {
+                \Illuminate\Support\Facades\Storage::disk($image->disk)->delete($image->path);
+            }
+            $path = $request->file('image')->store('images', 'public');
+            $data['path'] = $path;
+            $data['disk'] = 'public';
+            $data['mime_type'] = $request->file('image')->getMimeType();
+        }
+
+        $image->update($data);
+
+        return redirect()->route('admin.images.index')->with('success', 'Imagen actualizada exitosamente');
     }
 
     public function destroy(Image $image)
     {
+        if ($image->path) {
+            \Illuminate\Support\Facades\Storage::disk($image->disk)->delete($image->path);
+        }
         $image->delete();
 
-        return redirect()->route('admin.images.index')->with('success', 'Image eliminado exitosamente');
+        return redirect()->route('admin.images.index')->with('success', 'Imagen y archivo físico eliminados exitosamente');
     }
 }

@@ -28,7 +28,8 @@ class WarehouseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         Warehouse::create($validated);
@@ -49,7 +50,8 @@ class WarehouseController extends Controller
     public function update(Request $request, Warehouse $warehouse)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         $warehouse->update($validated);

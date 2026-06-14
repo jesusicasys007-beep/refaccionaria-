@@ -12,10 +12,6 @@ class OrderItemController extends Controller
     {
         $query = OrderItem::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $orderitems = $query->paginate(15);
 
         return view('administrador.orderitems.index', compact('orderitems'));
@@ -25,13 +21,14 @@ class OrderItemController extends Controller
     {
         $orders = Order::all();
 
-        return view('administrador.orderitems.create', compact('order_id'));
+        return view('administrador.orderitems.create', compact('orders'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'order_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         OrderItem::create($validated);
@@ -48,13 +45,14 @@ class OrderItemController extends Controller
     {
         $orders = Order::all();
 
-        return view('administrador.orderitems.edit', compact('orderitem', 'order_id'));
+        return view('administrador.orderitems.edit', compact('orderitem', 'orders'));
     }
 
     public function update(Request $request, OrderItem $orderitem)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'order_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $orderitem->update($validated);

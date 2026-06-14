@@ -25,13 +25,15 @@ class CarVariantController extends Controller
     {
         $carmodels = CarModel::all();
 
-        return view('administrador.carvariants.create', compact('car_model_id'));
+        return view('administrador.carvariants.create', compact('carmodels'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            'car_model_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         CarVariant::create($validated);
@@ -48,13 +50,15 @@ class CarVariantController extends Controller
     {
         $carmodels = CarModel::all();
 
-        return view('administrador.carvariants.edit', compact('carvariant', 'car_model_id'));
+        return view('administrador.carvariants.edit', compact('carvariant', 'carmodels'));
     }
 
     public function update(Request $request, CarVariant $carvariant)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            'car_model_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $carvariant->update($validated);

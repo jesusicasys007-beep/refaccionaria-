@@ -14,7 +14,7 @@ class PartController extends Controller
         $query = Part::query();
 
         if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('sku', 'like', '%' . $request->search . '%');
         }
 
         $parts = $query->paginate(15);
@@ -27,13 +27,16 @@ class PartController extends Controller
         $categories = Categorie::all();
         $manufacturers = Manufacturer::all();
 
-        return view('administrador.parts.create', compact('category_id', 'manufacturer_id'));
+        return view('administrador.parts.create', compact('categories', 'manufacturers'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'sku' => 'required',
+            'category_id' => 'required',
+            'manufacturer_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         Part::create($validated);
@@ -51,13 +54,16 @@ class PartController extends Controller
         $categories = Categorie::all();
         $manufacturers = Manufacturer::all();
 
-        return view('administrador.parts.edit', compact('part', 'category_id', 'manufacturer_id'));
+        return view('administrador.parts.edit', compact('part', 'categories', 'manufacturers'));
     }
 
     public function update(Request $request, Part $part)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'sku' => 'required',
+            'category_id' => 'required',
+            'manufacturer_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $part->update($validated);

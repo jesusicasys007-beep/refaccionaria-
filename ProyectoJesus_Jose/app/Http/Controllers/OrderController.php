@@ -13,7 +13,7 @@ class OrderController extends Controller
         $query = Order::query();
 
         if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('order_number', 'like', '%' . $request->search . '%');
         }
 
         $orders = $query->paginate(15);
@@ -25,13 +25,15 @@ class OrderController extends Controller
     {
         $users = User::all();
 
-        return view('administrador.orders.create', compact('user_id'));
+        return view('administrador.orders.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'order_number' => 'required',
+            'user_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         Order::create($validated);
@@ -48,13 +50,15 @@ class OrderController extends Controller
     {
         $users = User::all();
 
-        return view('administrador.orders.edit', compact('order', 'user_id'));
+        return view('administrador.orders.edit', compact('order', 'users'));
     }
 
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'order_number' => 'required',
+            'user_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $order->update($validated);

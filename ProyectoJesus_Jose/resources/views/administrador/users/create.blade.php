@@ -1,42 +1,51 @@
 @extends('administrador.plantilla')
 
-@section('title', 'Crear Usuario - Panel Admin')
+@section('title', 'Crear User - Panel Admin')
 
 @section('content')
-<div class="bg-white shadow rounded-xl p-6">
-    <div class="mb-6 flex items-center justify-between">
-        <h3 class="text-xl font-semibold text-slate-900">Crear Nuevo Usuario</h3>
-        <a href="{{ route('users.index') }}" class="inline-flex items-center rounded-xl bg-slate-600 px-4 py-2 text-sm text-white hover:bg-slate-700">Volver a la Lista</a>
+<div class="flex items-center justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Crear User</h1>
+        <p class="text-sm text-slate-500 mt-1">Añada un nuevo registro a la base de datos.</p>
     </div>
+    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl hover:bg-slate-50 focus:ring-4 focus:ring-slate-100 transition-all cursor-pointer">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
+    </a>
+</div>
 
-    @if($errors->any())
-        <div class="mb-6 rounded-xl bg-rose-50 border border-rose-200 p-4">
-            <div class="text-sm text-rose-800">
-                <ul class="list-disc list-inside space-y-1">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+@if($errors->any())
+    <div class="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-sm font-medium shadow-sm">
+        <div class="flex items-center gap-2 font-bold mb-2">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-600"></i> Por favor corrige los siguientes errores:
+        </div>
+        <ul class="list-disc list-inside space-y-1 ml-2 font-normal">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 md:p-8">
+    <form method="POST" action="{{ route('admin.users.store') }}">
+        @csrf
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+                <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">Name</label>
+                <input type="text" name="name" id="name" value="{{ old('name') }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400" required  placeholder="Ingrese Name...">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400" required  placeholder="Ingrese Email...">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+                <input type="password" name="password" id="password" value="{{ old('password') }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"   placeholder="Ingrese Password...">
             </div>
         </div>
-    @endif
-
-    <form method="POST" action="{{ route('users.store') }}" class="space-y-6">
-        @csrf
-        <div>
-            <label for="name" class="block text-sm font-medium text-slate-700">Nombre</label>
-            <input type="text" name="name" id="name" value="{{ old('name') }}" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500" required>
-        </div>
-        <div>
-            <label for="email" class="block text-sm font-medium text-slate-700">Correo Electrónico</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500" required>
-        </div>
-        <div>
-            <label for="password" class="block text-sm font-medium text-slate-700">Contraseña</label>
-            <input type="password" name="password" id="password" class="mt-1 block w-full rounded-xl border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500">
-        </div>
-        <div class="flex justify-end">
-            <button type="submit" class="inline-flex items-center rounded-xl bg-sky-600 px-4 py-2 text-sm text-white hover:bg-sky-700">Crear Usuario</button>
+        <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
+            <a href="{{ route('admin.users.index') }}" class="px-5 py-2.5 border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl hover:bg-slate-50 focus:ring-4 focus:ring-slate-100 transition-all cursor-pointer">Cancelar</a>
+            <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-xl hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500/20 active:bg-indigo-800 transition-all shadow-sm shadow-indigo-600/10 cursor-pointer"><i data-lucide="save" class="w-4 h-4 inline-block mr-1.5 -mt-0.5"></i> Crear</button>
         </div>
     </form>
 </div>

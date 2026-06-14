@@ -3,14 +3,22 @@
 @section('title', 'Editar Warehouse - Panel Admin')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Editar Warehouse</h1>
-    <a href="{{ route('admin.warehouses.index') }}" class="btn btn-secondary">Volver</a>
+<div class="flex items-center justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-900 tracking-tight">Editar Warehouse</h1>
+        <p class="text-sm text-slate-500 mt-1">Modifique los campos correspondientes del registro.</p>
+    </div>
+    <a href="{{ route('admin.warehouses.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl hover:bg-slate-50 focus:ring-4 focus:ring-slate-100 transition-all cursor-pointer">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
+    </a>
 </div>
 
 @if($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
+    <div class="mb-6 p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-sm font-medium shadow-sm">
+        <div class="flex items-center gap-2 font-bold mb-2">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-600"></i> Por favor corrige los siguientes errores:
+        </div>
+        <ul class="list-disc list-inside space-y-1 ml-2 font-normal">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -18,37 +26,44 @@
     </div>
 @endif
 
-<div class="card">
-    <div class="card-body">
-        <form method="POST" action="{{ route('admin.warehouses.update', $) }}">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ $->name }}" required>
+<div class="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 md:p-8">
+    <form method="POST" action="{{ route('admin.warehouses.update', $warehouse) }}">
+        @csrf
+        @method('PUT')
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+                <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">Name</label>
+                <input type="text" name="name" id="name" value="{{ old('name', $warehouse->name) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400" required >
             </div>
-            <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" name="address" id="address" class="form-control" value="{{ $->address }}" >
+            <div>
+                <label for="code" class="block text-sm font-semibold text-slate-700 mb-2">Code</label>
+                <input type="text" name="code" id="code" value="{{ old('code', $warehouse->code) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"  >
             </div>
-            <div class="mb-3">
-                <label for="manager" class="form-label">Manager</label>
-                <input type="text" name="manager" id="manager" class="form-control" value="{{ $->manager }}" >
+            <div>
+                <label for="address" class="block text-sm font-semibold text-slate-700 mb-2">Address</label>
+                <textarea name="address" id="address" rows="3" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400">{{ old('address', $warehouse->address) }}</textarea>
             </div>
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="text" name="phone" id="phone" class="form-control" value="{{ $->phone }}" >
+            <div>
+                <label for="city" class="block text-sm font-semibold text-slate-700 mb-2">City</label>
+                <input type="text" name="city" id="city" value="{{ old('city', $warehouse->city) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"  >
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ $->email }}" required>
+            <div>
+                <label for="state" class="block text-sm font-semibold text-slate-700 mb-2">State</label>
+                <input type="text" name="state" id="state" value="{{ old('state', $warehouse->state) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"  >
             </div>
-            <div class="mb-3">
-                <label for="capacity" class="form-label">Capacity</label>
-                <input type="text" name="capacity" id="capacity" class="form-control" value="{{ $->capacity }}" >
+            <div>
+                <label for="country" class="block text-sm font-semibold text-slate-700 mb-2">Country</label>
+                <input type="text" name="country" id="country" value="{{ old('country', $warehouse->country) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"  >
             </div>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </form>
-    </div>
+            <div>
+                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-2">Phone</label>
+                <input type="text" name="phone" id="phone" value="{{ old('phone', $warehouse->phone) }}" class="w-full px-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-400"  >
+            </div>
+        </div>
+        <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100">
+            <a href="{{ route('admin.warehouses.index') }}" class="px-5 py-2.5 border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl hover:bg-slate-50 focus:ring-4 focus:ring-slate-100 transition-all cursor-pointer">Cancelar</a>
+            <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white font-semibold text-sm rounded-xl hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500/20 active:bg-indigo-800 transition-all shadow-sm shadow-indigo-600/10 cursor-pointer"><i data-lucide="save" class="w-4 h-4 inline-block mr-1.5 -mt-0.5"></i> Guardar Cambios</button>
+        </div>
+    </form>
 </div>
 @endsection

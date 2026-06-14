@@ -34,25 +34,25 @@ Route::view('/contacto', 'cliente.contacto')->name('contacto');
 Route::view('/publicar', 'cliente.publicar')->name('publicar');
 Route::view('/registro', 'cliente.registro')->name('registro');
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('administrador.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
     Route::resource('attributes', AttributeController::class);
-    Route::resource('attribute-values', AttributeValueController::class);
+    Route::resource('attributevalues', AttributeValueController::class);
     Route::resource('brands', BrandController::class);
-    Route::resource('car-models', CarModelController::class);
-    Route::resource('car-variants', CarVariantController::class);
+    Route::resource('carmodels', CarModelController::class);
+    Route::resource('carvariants', CarVariantController::class);
     Route::resource('categories', CategorieController::class);
     Route::resource('components', ComponentController::class);
-    Route::resource('component-parts', ComponentPartController::class);
+    Route::resource('componentparts', ComponentPartController::class);
     Route::resource('images', ImageController::class);
     Route::resource('manufacturers', ManufacturerController::class);
     Route::resource('orders', OrderController::class);
-    Route::resource('order-items', OrderItemController::class);
+    Route::resource('orderitems', OrderItemController::class);
     Route::resource('parts', PartController::class);
-    Route::resource('part-variants', PartVariantController::class);
-    Route::resource('price-histories', PriceHistoryController::class);
+    Route::resource('partvariants', PartVariantController::class);
+    Route::resource('pricehistorys', PriceHistoryController::class);
     Route::resource('stocks', StockController::class);
     Route::resource('users', UserController::class);
     Route::resource('vehicles', VehicleController::class);

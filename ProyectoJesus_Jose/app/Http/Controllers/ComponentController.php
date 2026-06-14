@@ -28,7 +28,8 @@ class ComponentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         Component::create($validated);
@@ -49,7 +50,8 @@ class ComponentController extends Controller
     public function update(Request $request, Component $component)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'name' => 'required',
+            // Add extra validation rules here
         ]);
 
         $component->update($validated);

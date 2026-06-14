@@ -13,10 +13,6 @@ class StockController extends Controller
     {
         $query = Stock::query();
 
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
         $stocks = $query->paginate(15);
 
         return view('administrador.stocks.index', compact('stocks'));
@@ -27,13 +23,15 @@ class StockController extends Controller
         $warehouses = Warehouse::all();
         $parts = Part::all();
 
-        return view('administrador.stocks.create', compact('warehouse_id', 'part_id'));
+        return view('administrador.stocks.create', compact('warehouses', 'parts'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'warehouse_id' => 'required',
+            'part_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         Stock::create($validated);
@@ -51,13 +49,15 @@ class StockController extends Controller
         $warehouses = Warehouse::all();
         $parts = Part::all();
 
-        return view('administrador.stocks.edit', compact('stock', 'warehouse_id', 'part_id'));
+        return view('administrador.stocks.edit', compact('stock', 'warehouses', 'parts'));
     }
 
     public function update(Request $request, Stock $stock)
     {
         $validated = $request->validate([
-            // Add validation rules here
+            'warehouse_id' => 'required',
+            'part_id' => 'required',
+            // Add extra validation rules here
         ]);
 
         $stock->update($validated);

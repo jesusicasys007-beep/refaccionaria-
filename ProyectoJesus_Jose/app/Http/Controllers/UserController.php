@@ -12,7 +12,7 @@ class UserController extends Controller
         $query = User::query();
 
         if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('email', 'like', '%' . $request->search . '%');
         }
 
         $users = $query->paginate(15);
@@ -28,14 +28,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            'email' => 'required',
+            // Add extra validation rules here
         ]);
 
         User::create($validated);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado exitosamente');
+        return redirect()->route('admin.users.index')->with('success', 'User creado exitosamente');
     }
 
     public function show(User $user)
@@ -51,14 +50,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6',
+            'email' => 'required',
+            // Add extra validation rules here
         ]);
 
         $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente');
+        return redirect()->route('admin.users.index')->with('success', 'User actualizado exitosamente');
     }
 
     public function destroy(User $user)
